@@ -31,6 +31,9 @@
 
         Number of Login Attempts:
         <asp:Label ID="lblAttempt" runat="server" Text=""></asp:Label>
+
+        Visitors Count:
+        <asp:Label ID="lblCount" runat="server" Text=""></asp:Label>
         
     </div>
     </form>

@@ -13,11 +13,11 @@ namespace StateManagementDemo
         {
             if (!IsPostBack)
             {
-                //The View State variable to hold down login attempts
+                //[View State] - The View State variable to hold down login attempts
                 ViewState["LoginAttempt"] = 0;
             }
 
-            //Creation for Persistent Cookie based on User's visit History
+            //[Cookies] - Creation for Persistent Cookie based on User's visit History
             HttpCookie cookie = Request.Cookies["Visit"];
             if (cookie == null)
             {
@@ -27,6 +27,8 @@ namespace StateManagementDemo
             {
                 lblMessage.Text = "Welcome " + cookie["Name"] + ". You last visited on " + cookie["VisitTime"];
             }
+
+
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -41,7 +43,7 @@ namespace StateManagementDemo
             }
 
 
-            //Retrieval of user history from cookie
+            //[Cookies] - Retrieval of user history from cookie
             HttpCookie cookie = Request.Cookies["Visit"];
             if (cookie == null)
             {
@@ -52,6 +54,26 @@ namespace StateManagementDemo
             cookie["VisitTime"] = DateTime.Now.ToString();
             cookie.Expires = DateTime.Now.AddYears(1);
             Response.Cookies.Add(cookie);
+            
+
+
+            if(txtUsername.Text == "Sahil")
+            {
+                   //[Query String] - Redirection of user to Dashboard page if the username is "Sahil"
+                   //Response.Redirect("Dashboard.aspx?Username=" + txtUsername.Text );
+
+
+                  //[Session State] - Redirection of user to Dashboard page if the username is "Sahil"
+                  Session["Username"] = txtUsername.Text;
+                  Response.Redirect("Dashboard.aspx");
+            }
+
+
+            if (Application["Counter"] != null)
+            {
+                int OnlineUsers = ((int)Application["Counter"]);
+                lblCount.Text = OnlineUsers.ToString();
+            }  
         }
     }
 }
