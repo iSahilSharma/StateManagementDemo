@@ -13,67 +13,66 @@ namespace StateManagementDemo
         {
             if (!IsPostBack)
             {
-                //[View State] - The View State variable to hold down login attempts
-                ViewState["LoginAttempt"] = 0;
+                ViewState["WrongAttempts"] = 0;
             }
 
-            //[Cookies] - Creation for Persistent Cookie based on User's visit History
-            HttpCookie cookie = Request.Cookies["Visit"];
+            //Cookies - To track the Visitor History of the User
+            HttpCookie cookie = Request.Cookies["VisitHistory"];
+
             if (cookie == null)
             {
-                lblMessage.Text = "First Time Visit";
+                lblVisit.Text = "Welcome to Developer's Cafe";
+
+                cookie = new HttpCookie("VisitHistory");
+                cookie["VisitTime"] = DateTime.Now.ToString();
+                cookie.Expires = DateTime.Now.AddYears(1);
+                Response.Cookies.Add(cookie);
             }
             else
             {
-                lblMessage.Text = "Welcome " + cookie["Name"] + ". You last visited on " + cookie["VisitTime"];
+                lblVisit.Text = "Welcome to Developer's Cafe. You last visited on " + cookie["VisitTime"];
+                cookie["VisitTime"] = DateTime.Now.ToString();
+                cookie.Expires = DateTime.Now.AddYears(1);
+                Response.Cookies.Add(cookie);
             }
 
 
-        }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
-        {
-
-            if (ViewState["LoginAttempt"] != null)
-            {
-                int count = Convert.ToInt32(ViewState["LoginAttempt"]) + 1;
-                lblAttempt.Text = count.ToString();
-
-                ViewState["LoginAttempt"] = count.ToString();
-            }
-
-
-            //[Cookies] - Retrieval of user history from cookie
-            HttpCookie cookie = Request.Cookies["Visit"];
-            if (cookie == null)
-            {
-                cookie = new HttpCookie("Visit");
-            }
-
-            cookie["Name"] = txtUsername.Text;
-            cookie["VisitTime"] = DateTime.Now.ToString();
-            cookie.Expires = DateTime.Now.AddYears(1);
-            Response.Cookies.Add(cookie);
-            
-
-
-            if(txtUsername.Text == "Sahil")
-            {
-                   //[Query String] - Redirection of user to Dashboard page if the username is "Sahil"
-                   //Response.Redirect("Dashboard.aspx?Username=" + txtUsername.Text );
-
-
-                  //[Session State] - Redirection of user to Dashboard page if the username is "Sahil"
-                  Session["Username"] = txtUsername.Text;
-                  Response.Redirect("Dashboard.aspx");
-            }
-
-
+            //Application State - Count the number of Online Users.
             if (Application["Counter"] != null)
             {
-                int OnlineUsers = ((int)Application["Counter"]);
-                lblCount.Text = OnlineUsers.ToString();
-            }  
+                lblCounter.Text = Application["Counter"].ToString();
+            }
+
         }
+
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+
+            if (txtUser.Text == "admin" && txtPass.Text == "12345")
+            {
+                //Query String - To transfer information from one page to another by appending to the URL [Not Secure].
+                //Response.Redirect(string.Format("Dashboard.aspx?username={0}", txtUser.Text));  
+
+                //Session State - To transfer information from one page to another without appending to the URL [Secure].
+                Session["Username"] = txtUser.Text;
+                Response.Redirect("Dashboard.aspx");
+            }
+
+            else
+            {
+                //ViewState - To Count the Number of Wrong Login Attempts.
+                if (ViewState["WrongAttempts"] != null)
+                {
+                    int count = Convert.ToInt32(ViewState["LoginAttempt"]) + 1;
+                    lblAttempt.Text = "Incorrect Credentials. Number of Wrong Attempts are: " + count.ToString();
+
+                    ViewState["LoginAttempt"] = count.ToString();
+                }
+            }
+
+        }
+
     }
 }

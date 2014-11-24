@@ -9,7 +9,6 @@ namespace StateManagementDemo
 {
     public class Global : System.Web.HttpApplication
     {
-        
         protected void Application_Start(object sender, EventArgs e)
         {
             Application["Counter"] = 0;
@@ -17,15 +16,9 @@ namespace StateManagementDemo
 
         protected void Session_Start(object sender, EventArgs e)
         {
-            // Code that runs when a new session is started
-            if (Application["Counter"] != null)
-            {
-                Application.Lock();
-                Application["Counter"] =
-                ((int)Application["Counter"]) + 1;
-                Application.UnLock();
-            }
-
+            Application.Lock();
+            Application["Counter"] = Convert.ToInt32(Application["Counter"]) + 1;
+            Application.UnLock();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -45,7 +38,9 @@ namespace StateManagementDemo
 
         protected void Session_End(object sender, EventArgs e)
         {
-
+            Application.Lock();
+            Application["Counter"] = Convert.ToInt32(Application["Counter"]) - 1;
+            Application.UnLock();
         }
 
         protected void Application_End(object sender, EventArgs e)

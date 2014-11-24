@@ -10,7 +10,7 @@
 namespace StateManagementDemo {
     
     
-    public partial class Test {
+    public partial class Demo {
         
         /// <summary>
         /// form1 control.

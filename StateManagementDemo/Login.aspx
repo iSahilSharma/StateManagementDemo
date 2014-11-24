@@ -8,34 +8,37 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <h3>Login Page - Please enter your credentials to login</h3>
-        
-        Username: <asp:TextBox ID="txtUsername" runat="server"></asp:TextBox>
-        <br />
-        Password: &nbsp;<asp:TextBox ID="txtPassword" runat="server" TextMode="Password"></asp:TextBox>
+        <div>
+            <h3>Welcome to Developer's Cafe</h3>
 
-        <br />
-        <br />
-        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click"  />
+            Username:
+            <asp:TextBox ID="txtUser" runat="server" required></asp:TextBox>
+            <br />
+            Password: &nbsp;<asp:TextBox ID="txtPass" runat="server" TextMode="Password" required></asp:TextBox>
 
-        <br />        
-        <br />
-        
-        Welcome Message:
-        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+            <br />
+            <br />
+            <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" />
 
-        
-        <br />
-        <br />
+            <br />
+            <br />
 
-        Number of Login Attempts:
-        <asp:Label ID="lblAttempt" runat="server" Text=""></asp:Label>
+            <%--Last Login:--%>
+                  <asp:Label ID="lblVisit" runat="server" Text="" ForeColor="Red"></asp:Label>
+            <br />
+            <br />
 
-        Visitors Count:
-        <asp:Label ID="lblCount" runat="server" Text=""></asp:Label>
-        
-    </div>
+            <%--Online Visitors:--%> 
+            Online Visitors:                 
+            <asp:Label ID="lblCounter" runat="server" Text="" ForeColor="Red"></asp:Label>
+                        
+            <br />
+            <br />
+            <%--Number of Wrong Login Attempts:--%>
+            <asp:Label ID="lblAttempt" runat="server" Text="" ForeColor="Red"></asp:Label>
+
+
+        </div>
     </form>
 </body>
 </html>

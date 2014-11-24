@@ -8,13 +8,18 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <h3>Dashboard - Welcome to XYZ Bank</h3>
+        <div>
+            <h3>Dashboard - Welcome to Developer's Cafe</h3>
 
-        Hello:
-        <asp:Label ID="lblUserInfo" runat="server" Text=""></asp:Label>
+            <asp:Button ID="btnLogout" runat="server" Text="Logout" OnClick="btnLogout_Click" />
+            <br />
+            <br />
+                                              
+             <%--Current User:--%>  
+            Your Username is:
+            <asp:Label ID="lblName" runat="server" Text="" ForeColor="Red"></asp:Label>                      
 
-    </div>
+        </div>
     </form>
 </body>
 </html>
